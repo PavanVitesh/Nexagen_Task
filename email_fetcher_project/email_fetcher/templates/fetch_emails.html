@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Fetcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #log-container {
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        .log-success {
+            color: green;
+        }
+        .log-error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Email Fetcher</h1>
+        <form method="POST" action="{% url 'fetch_emails' %}">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Your Gmail Address" required>
+            <input type="password" name="password" placeholder="Your Gmail Password" required>
+            <button type="submit">Fetch Emails</button>
+        </form>
+
+        <div id="log-container mx-1">
+            {% if logs %}
+                {% for log in logs %}
+                    <div class="log-success">{{ log }}</div>
+                {% endfor %}
+            {% else %}
+                <div class="log-error">No logs available yet.</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
